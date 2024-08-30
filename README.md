@@ -14,3 +14,5 @@ However, I did find this site nice for a color scheme:
 Simply put, press the Start button to begin!
 A random flash card will be presented with a button to alternate between the front and back of the card.
 Click New Card to recieve another random card!
+The Previous and Next buttons will iterate through the cards object in a linear fashion.
+Don't worry if you are at the beginning or the end! The object array will loop so that you can continue.

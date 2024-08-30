@@ -1,0 +1,132 @@
+:root {
+    --base-background: #212121;
+    --base-text: #E0E0E0;
+    --secondary-text: #B0B0B0;
+    --accent-color: #BB86FC;
+    --highlight-color: #03DAC6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: var(--base-background);
+    color: var(--base-text);
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#start-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#start-container h1, #start-container h2, #start-containter h3 {
+    margin: 30px auto;
+}
+
+button {
+    font-size: 24px;
+    padding: 16px 32px;
+    margin: 40px;
+    border-radius: 25px;
+    color: var(--base-background);
+    background: var(--accent-color);
+    border: var(--secondary-text) 5px groove;
+    box-shadow: 0 0 10px 2px var(--secondary-text);
+}
+
+button:hover {
+    background: var(--highlight-color);
+    cursor: pointer;
+    border-style: inset;
+}
+
+button:active {
+    background: var(--base-text);
+    cursor: pointer;
+    border-style: inset;
+}
+
+#flashcard-container {
+    background: var(--base-background);
+    color: var(--base-text);
+    border: var(--secondary-text) 2px solid;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 90vh;
+}
+
+#flashcard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    font-size: 24px;
+    color: var(--base-background);
+    box-shadow: 0 0 15px 2px var(--secondary-text);
+    height: 80%;
+}
+
+#class-id-container {
+    position: relative;
+    width: 100%;
+}
+
+#card-class {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-transform: capitalize;
+    padding: 20px;
+}
+
+#card-id {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+}
+
+#front, #back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+#front p, #back p {
+    margin: 10px;
+    text-transform: capitalize;
+}
+
+#button-container {
+    display: flex;
+    justify-content: space-around;
+}

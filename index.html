@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Medical Flash Cards</title>
+</head>
+<body>    
+    <div id="start-container">
+        <h1>Some cards are pre-defined. Lots are more of a general scope.</h1>
+        <h2>This flash card application is meant to challenge critical thinking.</h2>
+        <button id="start-button">Start</button>
+        <h3>Click the start button to begin.</h3>
+    </div>
+    <div id="flashcard-container" style="display: none;">
+        <div id="flashcard">
+            <div id="class-id-container">
+                <div id="card-class">
+                </div>
+                <div id="card-id">
+                </div>
+            </div>
+            <div id="front">
+            </div>
+            <div id="back" style="display: none;">
+            </div>
+        </div>
+        <div id="button-container">
+            <button id="prev-button">Previous Card</button>
+            <button id="show-answer-button">Show Answer</button>
+            <button id="random-button">Random Card</button>
+            <button id="next-button">Next Card</button>
+        </div>
+    </div>
+    <script src="cards.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
