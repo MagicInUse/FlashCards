@@ -1,46 +1,23 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    validate: {
-      validator: function(v) {
-        return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v);
-      },
-      message: props => `${props.value} is not a valid email!`
-    }
-  },
-  thoughts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Thought'
-  }],
-  friends: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }]
+  username: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+  authLevel: { type: String, required: false, default: 0 }
 });
 
-// Create a virtual property `friendCount` that retrieves the length of the user's friends array field
-userSchema.virtual('friendCount').get(function() {
-  return this.friends.length;
+userSchema.pre('save', async function(next) {
+  if (this.isModified('password') || this.isNew) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
 });
 
-// Ensure virtual fields are serialized
-userSchema.set('toJSON', {
-  virtuals: true
-});
-userSchema.set('toObject', {
-  virtuals: true
-});
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 
