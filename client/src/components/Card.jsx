@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CARDS } from '../utils/queries.js';
 
@@ -7,7 +7,14 @@ const Card = () => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    if (loading) return <p>Loading...</p>;
+    useEffect(() => {
+        if (data && data.cards.length > 0) {
+            const randomIndex = Math.floor(Math.random() * data.cards.length);
+            setCurrentIndex(randomIndex);
+        }
+    }, [data]);
+
+    if (loading) return <p id="loading">Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     const handleNext = () => {

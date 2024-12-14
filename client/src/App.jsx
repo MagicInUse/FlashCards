@@ -6,7 +6,7 @@ import Home from './pages/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import SingleCard from './components/Card.jsx';
-import { isAuthenticated } from './utils/auth.jsx';
+import { isAuthenticated } from './utils/auth.js';
 
 const App = () => (
   <ApolloProvider client={client}>

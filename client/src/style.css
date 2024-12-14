@@ -74,8 +74,11 @@ button:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 95%;
+    min-width: 888px;
     height: 90vh;
+    box-shadow: 0 0 15px 2px var(--secondary-text);
+    contain: content;
 }
 
 #flashcard {
@@ -83,11 +86,12 @@ button:active {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
     margin: 10px;
     font-size: 24px;
     color: var(--base-background);
-    box-shadow: 0 0 15px 2px var(--secondary-text);
     height: 80%;
+    width: 100%;
 }
 
 #class-id-container {
@@ -98,7 +102,7 @@ button:active {
 #card-class {
     display: inline-block;
     position: absolute;
-    top: 0;
+    top: 0px;
     left: 0;
     text-transform: capitalize;
     padding: 20px;
@@ -107,7 +111,7 @@ button:active {
 #card-id {
     display: inline-block;
     position: absolute;
-    top: 0;
+    top: 0px;
     right: 0;
     padding: 20px;
 }
@@ -124,9 +128,17 @@ button:active {
 #front p, #back p {
     margin: 10px;
     text-transform: capitalize;
+    padding: 20px;
 }
 
 #button-container {
     display: flex;
     justify-content: space-around;
+}
+
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
