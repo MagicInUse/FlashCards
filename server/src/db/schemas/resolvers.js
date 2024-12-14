@@ -10,10 +10,10 @@ const resolvers = {
     user: async (_, { id }) => await User.findById(id),
   },
   Mutation: {
-    addCard: async (_, { front, back }) => {
+    addCard: async (_, { front, back, cardClass }) => {
       const lastCard = await Card.findOne().sort({ id: -1 });
       const newId = lastCard ? lastCard.id + 1 : 1;
-      const newCard = new Card({ id: newId, front, back });
+      const newCard = new Card({ id: newId, front, back, class: cardClass });
       await newCard.save();
       return newCard;
     },

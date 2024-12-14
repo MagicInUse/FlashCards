@@ -6,6 +6,7 @@ export const GET_CARDS = gql`
       id
       front
       back
+      cardClass
     }
   }
 `;
@@ -16,6 +17,7 @@ export const GET_CARD_BY_ID = gql`
       id
       front
       back
+      cardClass
     }
   }
 `;

@@ -3,9 +3,9 @@ import { useQuery } from '@apollo/client';
 import { GET_CARDS } from '../utils/queries.js';
 
 const Card = () => {
-    const { loading, error, data } = useQuery<CardsData>(GET_CARDS);
-    const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const { loading, error, data } = useQuery(GET_CARDS);
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
@@ -29,18 +29,18 @@ const Card = () => {
         <div id="flashcard-container">
             <div key={card.id} id="flashcard">
                 <div id="class-id-container">
-                    <div id="card-class">{card.class}</div>
+                    <div id="card-class">{card.cardClass}</div>
                     <div id="card-id">{card.id}</div>
                 </div>
                 <div id={showAnswer ? 'back' : 'front'}>
-                    <p>{showAnswer ? card.front : card.back}</p>
+                    <p dangerouslySetInnerHTML={{ __html: showAnswer ? card.back : card.front }}></p>
                 </div>
                 <div id="button-container">
-                    <button onClick={() => setShowAnswer(!showAnswer)}>
-                        {showAnswer ? 'Show Question' : 'Show Answer'}
-                    </button>
                     <button onClick={handlePrevious}>Previous Card</button>
                     <button onClick={handleNext}>Next Card</button>
+                    <button onClick={() => setShowAnswer(!showAnswer)}>
+                        {showAnswer ? 'Show Front' : 'Show Back'}
+                    </button>
                     <button onClick={handleRandom}>Random Card</button>
                 </div>
             </div>
