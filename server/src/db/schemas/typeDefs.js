@@ -3,14 +3,19 @@ import { gql } from 'graphql-tag';
 const typeDefs = gql`
   type Card {
     id: Int!
-    question: String!
-    answer: String!
+    front: String!
+    back: String!
   }
 
   type User {
     id: ID!
     username: String!
-    authLevel: Int!
+    password: String!
+    authLevel: Int
+  }
+
+  type AuthPayload {
+    token: String!
   }
 
   type Query {
@@ -23,6 +28,7 @@ const typeDefs = gql`
   type Mutation {
     addCard(question: String!, answer: String!): Card
     registerUser(username: String!, password: String!, authLevel: Int!): User
+    loginUser(username: String!, password: String!): AuthPayload
   }
 `;
 

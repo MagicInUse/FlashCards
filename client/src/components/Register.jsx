@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN_USER } from '../utils/mutations.js';
+import { REGISTER_USER } from '../utils/mutations.js';
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loginUser] = useMutation(LOGIN_USER);
+  const [registerUser] = useMutation(REGISTER_USER);
   const navigate = useNavigate();
+  const authLevel = 0;
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -20,9 +21,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await loginUser({ variables: { username, password } });
-      localStorage.setItem('token', data.loginUser.token);
-      navigate('/cards');
+      await registerUser({ variables: { username, password, authLevel } });
+      navigate('/login');
     } catch (err) {
       console.error(err);
     }
@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <input
         type="text"
         placeholder="Username"
@@ -43,9 +43,9 @@ const Login = () => {
         value={password}
         onChange={handlePasswordChange}
       />
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
   );
 };
 
-export default Login;
+export default Register;
