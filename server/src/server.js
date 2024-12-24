@@ -9,18 +9,17 @@ import routes from './routes/index.js';
 import db from './db/config/connections.js';
 import cors from 'cors';
 
-try {
   await db();
 
   const PORT = process.env.PORT || 3001;
+  const BASE_URL = '/medical-cards';
   const app = express();
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
   // Serve static files from the 'public' directory
-  app.use(express.static(path.join(__dirname, '../../client/dist')));
-  // app.use(express.static(path.join(__dirname, '../public_html/flash-cards')));
+  app.use(BASE_URL, express.static(path.join(__dirname, '../../public_html/medical-cards')));
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
@@ -37,21 +36,16 @@ try {
   });
   await server.start();
 
-  app.use('/flash-cards/graphql', expressMiddleware(server));
+  app.use(`${BASE_URL}/graphql`, expressMiddleware(server));
 
-  app.use(routes);
+  app.use(BASE_URL, routes);
 
   // Serve the index.html file for any unknown routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-    // res.sendFile(path.join(__dirname, '../public_html/flash-cards/index.html'));
+  app.get(`${BASE_URL}/*`, (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public_html/medical-cards/index.html'));
   });
 
   app.listen(PORT, () => {
     console.log(`Flash Cards ready @ port ${PORT} !`);
-    console.log(`GraphQL ready @ http://localhost:${PORT}/flash-cards/graphql !`);
+    console.log(`GraphQL ready @ http://localhost:${PORT}${BASE_URL}/graphql !`);
   });
-} catch (error) {
-  console.error('Error starting server:', error);
-  process.exit(1);
-};

@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN_USER } from '../utils/mutations.js';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../graphql/mutations';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loginUser] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,20 +22,20 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
       <input
         type="text"
-        placeholder="Username"
         value={username}
-        onChange={handleUsernameChange}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
       />
       <input
         type="password"
-        placeholder="Password"
         value={password}
-        onChange={handlePasswordChange}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
       />
       <button type="submit">Login</button>
+      {error && <p>Error logging in</p>}
     </form>
   );
 };
