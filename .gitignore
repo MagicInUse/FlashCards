@@ -131,3 +131,6 @@ dist
 
 # Bootcamp
 TASK.md
+
+# Any zip from uploading to host
+*.zip

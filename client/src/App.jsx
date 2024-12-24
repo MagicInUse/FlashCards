@@ -10,6 +10,7 @@ import { isAuthenticated } from './utils/auth.js';
 
 const App = () => (
   <ApolloProvider client={client}>
+    {/* <Router basename="/flash-cards"> */}
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />

@@ -3,25 +3,29 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
+  build: {
+    outDir: './dist',
+  },
   server: {
     port: 3000,
     open: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'localhost:3001/',
         changeOrigin: true,
-        secure: false,
+        secure: true,
       },
       '/auth': {
-        target: 'http://localhost:3001',
+        target: 'localhost:3001/',
         changeOrigin: true,
-        secure: false
+        secure: true
       },
-      '/graphql': {
-        target: 'http://localhost:3001',
+      '/flash-cards/graphql': {
+        target: 'localhost:3001/',
         changeOrigin: true,
-        secure: false
+        secure: true
       },
     },
   },
