@@ -14,6 +14,14 @@ const Card = () => {
         }
     }, [data]);
 
+    const card = data ? data.cards[currentIndex] : null;
+
+    useEffect(() => {
+        if (card) {
+            document.getElementById('card-content').innerHTML = showAnswer ? card.back : card.front;
+        }
+    }, [card, showAnswer]);
+
     if (loading) return <p id="loading">Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
@@ -33,8 +41,6 @@ const Card = () => {
         setShowAnswer(false);
     };
 
-    const card = data.cards[currentIndex];
-
     return (
         <div id="flashcard-container">
             <div key={card.id} id="flashcard">
@@ -43,7 +49,7 @@ const Card = () => {
                     <div id="card-id">{card.id}</div>
                 </div>
                 <div id={showAnswer ? 'back' : 'front'}>
-                    <p>{showAnswer ? card.back : card.front}</p>
+                    <p id="card-content"></p>
                 </div>
                 <div id="button-container">
                     <button onClick={handlePrevious}>Previous Card</button>
