@@ -43,7 +43,7 @@ const Card = () => {
                     <div id="card-id">{card.id}</div>
                 </div>
                 <div id={showAnswer ? 'back' : 'front'}>
-                    <p dangerouslySetInnerHTML={{ __html: showAnswer ? card.back : card.front }}></p>
+                    <p>{showAnswer ? card.back : card.front}</p>
                 </div>
                 <div id="button-container">
                     <button onClick={handlePrevious}>Previous Card</button>
