@@ -13,7 +13,7 @@ import cors from 'cors';
 
   const PORT = process.env.PORT || 3001;
 
-  const BASE_URL = '';
+  let BASE_URL = '';
   if (process.env.NODE_ENV === 'production') {
     BASE_URL = '/medical-cards';
   }
