@@ -22,7 +22,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: true
       },
-      '/flash-cards/graphql': {
+      '/graphql': {
         target: 'localhost:3001/',
         changeOrigin: true,
         secure: true

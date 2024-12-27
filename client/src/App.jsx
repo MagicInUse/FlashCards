@@ -10,8 +10,7 @@ import { isAuthenticated } from './utils/auth.js';
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Router basename="/medical-cards">
-    {/* <Router> */}
+    <Router basename={process.env.NODE_ENV === 'production' ? '/medical-cards' : ''}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

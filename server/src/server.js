@@ -12,14 +12,19 @@ import cors from 'cors';
   await db();
 
   const PORT = process.env.PORT || 3001;
-  const BASE_URL = '/medical-cards';
+
+  const BASE_URL = '';
+  if (process.env.NODE_ENV === 'production') {
+    BASE_URL = '/medical-cards';
+  }
+
   const app = express();
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
 
   // Serve static files from the 'public' directory
-  app.use(BASE_URL, express.static(path.join(__dirname, '../../public_html/medical-cards')));
+  process.env.NODE_ENV === 'production' ? app.use(BASE_URL, express.static(path.join(__dirname, '../../public_html/medical-cards'))) : app.use(express.static(path.join(__dirname, '../../client/dist')));
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
@@ -42,7 +47,7 @@ import cors from 'cors';
 
   // Serve the index.html file for any unknown routes
   app.get(`${BASE_URL}/*`, (req, res) => {
-    res.sendFile(path.join(__dirname, '../../public_html/medical-cards/index.html'));
+    process.env.NODE_ENV ? res.sendFile(path.join(__dirname, '../../public_html/medical-cards/index.html')) : res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   });
 
   app.listen(PORT, () => {
