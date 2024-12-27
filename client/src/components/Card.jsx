@@ -19,15 +19,18 @@ const Card = () => {
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % data.cards.length);
+        setShowAnswer(false);
     };
 
     const handlePrevious = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + data.cards.length) % data.cards.length);
+        setShowAnswer(false);
     };
 
     const handleRandom = () => {
         const randomIndex = Math.floor(Math.random() * data.cards.length);
         setCurrentIndex(randomIndex);
+        setShowAnswer(false);
     };
 
     const card = data.cards[currentIndex];
