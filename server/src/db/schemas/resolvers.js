@@ -39,10 +39,13 @@ const resolvers = {
         throw new Error('Not authorized to update this card');
       }
 
-      const updates = {};
-      if (front) updates.front = front;
-      if (back) updates.back = back;
-      if (cardClass) updates.cardClass = cardClass;
+      const updates = {
+        ...(front && { front }),
+        ...(back && { back }),
+        ...(cardClass && { cardClass }),
+        cardUpdaterId: context.user.id,
+        lastUpdated: new Date()
+      };
 
       const updatedCard = await Card.findOneAndUpdate(
         { id },

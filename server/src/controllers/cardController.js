@@ -38,7 +38,11 @@ export const addCard = async (req, res) => {
 export const updateCard = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = {
+      ...req.body,
+      cardUpdaterId: req.user.id,
+      lastUpdated: new Date()
+    };
     
     const card = await Card.findOne({ id });
     if (!card) {
