@@ -64,6 +64,14 @@ button:active {
     border-style: inset;
 }
 
+.login-form-text {
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 10px;
+    border-style: solid;
+}
+
 #flashcard-container {
     background: var(--base-background);
     color: var(--base-text);

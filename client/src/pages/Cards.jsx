@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../components/Card';
-import { logout } from '../utils/auth';
+import Card from '../components/Card.jsx';
+import { logout } from '../utils/auth.js';
 
 const Cards = () => {
     const navigate = useNavigate();

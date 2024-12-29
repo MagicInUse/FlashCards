@@ -13,8 +13,6 @@ const App = () => (
     <Router basename={process.env.NODE_ENV === 'production' ? '/medical-cards' : ''}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route
           path="/cards"
           element={isAuthenticated() ? <Cards /> : <Navigate to="/login" />}
