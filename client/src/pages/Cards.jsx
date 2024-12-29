@@ -1,9 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
+import { logout } from '../utils/auth';
 
 const Cards = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
-        <Card />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Card />
+            <br />
+            <button onClick={handleLogout}>
+                Logout
+            </button>
+        </div>
     );
 }
 
