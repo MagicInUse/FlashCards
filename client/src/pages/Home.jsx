@@ -72,20 +72,20 @@ const Home = () => {
             setPassword={setPassword}
           />
         )}
+        <label style={{ marginTop: '10px', display: 'block' }}>
+          <input
+            type="checkbox"
+            checked={newUser}
+            onChange={(e) => setNewUser(e.target.checked)}
+          />
+          {` New User`}
+        </label>
         <button type="submit">
           {newUser ? 'Register' : 'Login'}
         </button>
         {loginError && !newUser && <p>Error logging in</p>}
         {registerError && newUser && <p>Error registering</p>}
       </form>
-      <label style={{ marginTop: '10px', display: 'block' }}>
-        <input
-          type="checkbox"
-          checked={newUser}
-          onChange={(e) => setNewUser(e.target.checked)}
-        />
-        {` New User`}
-      </label>
     </div>
   );
 };
