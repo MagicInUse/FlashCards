@@ -8,7 +8,8 @@ const typeDefs = gql`
     cardClass: String!
     cardCreatorId: ID!
     cardUpdaterId: ID
-    lastUpdated: String
+    createdAt: String
+    updatedAt: String
   }
 
   type User {

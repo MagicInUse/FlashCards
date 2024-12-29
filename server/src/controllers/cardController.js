@@ -40,8 +40,7 @@ export const updateCard = async (req, res) => {
     const { id } = req.params;
     const updates = {
       ...req.body,
-      cardUpdaterId: req.user.id,
-      lastUpdated: new Date()
+      cardUpdaterId: req.user.id
     };
     
     const card = await Card.findOne({ id });

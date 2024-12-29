@@ -43,8 +43,7 @@ const resolvers = {
         ...(front && { front }),
         ...(back && { back }),
         ...(cardClass && { cardClass }),
-        cardUpdaterId: context.user.id,
-        lastUpdated: new Date()
+        cardUpdaterId: context.user.id
       };
 
       const updatedCard = await Card.findOneAndUpdate(

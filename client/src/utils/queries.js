@@ -7,6 +7,10 @@ export const GET_CARDS = gql`
       front
       back
       cardClass
+      cardCreatorId
+      cardUpdaterId
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -18,6 +22,10 @@ export const GET_CARD_BY_ID = gql`
       front
       back
       cardClass
+      cardCreatorId
+      cardUpdaterId
+      createdAt
+      updatedAt
     }
   }
 `;
