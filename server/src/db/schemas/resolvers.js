@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Card from '../../models/card.js';
-import User from '../../models/user.js';
+import { Card, User } from '../../models/index.js';
 
 const resolvers = {
   Query: {
