@@ -25,9 +25,9 @@ const typeDefs = gql`
 
   type Query {
     cards: [Card]
-    card(id: Int!): Card
+    card(id: Int!): Card!
     users: [User]
-    user(id: ID!): User
+    user(id: ID!): User!
   }
 
   type Mutation {

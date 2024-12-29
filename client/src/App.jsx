@@ -5,7 +5,7 @@ import client from './utils/apolloClient';
 import Home from './pages/Home.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
-import SingleCard from './components/Card.jsx';
+import Cards from './pages/Cards.jsx';
 import { isAuthenticated } from './utils/auth.js';
 
 const App = () => (
@@ -17,7 +17,7 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         <Route
           path="/cards"
-          element={isAuthenticated() ? <SingleCard /> : <Navigate to="/login" />}
+          element={isAuthenticated() ? <Cards /> : <Navigate to="/login" />}
         />
       </Routes>
     </Router>

@@ -3,7 +3,10 @@ import { Card, User } from '../../models/index.js';
 
 const resolvers = {
   Query: {
-    cards: async () => await Card.find(),
+    cards: async () => {
+      const cards = await Card.find({}, 'id front back cardClass');
+      return cards;
+    },
     card: async (_, { id }) => await Card.findOne({ id }),
     users: async () => await User.find(),
     user: async (_, { id }) => await User.findById(id),

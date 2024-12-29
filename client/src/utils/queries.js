@@ -7,10 +7,6 @@ export const GET_CARDS = gql`
       front
       back
       cardClass
-      cardCreatorId
-      cardUpdaterId
-      createdAt
-      updatedAt
     }
   }
 `;
