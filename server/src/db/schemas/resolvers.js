@@ -29,6 +29,28 @@ const resolvers = {
       const token = jwt.sign({ id: user._id, authLevel: user.authLevel }, process.env.JWT_SECRET, { expiresIn: '1h' });
       return { token };
     },
+    updateCard: async (_, { id, front, back, cardClass }, context) => {
+      if (!context.user) throw new Error('Not authenticated');
+      
+      const card = await Card.findOne({ id });
+      if (!card) throw new Error('Card not found');
+      
+      if (card.cardCreatorId.toString() !== context.user.id) {
+        throw new Error('Not authorized to update this card');
+      }
+
+      const updates = {};
+      if (front) updates.front = front;
+      if (back) updates.back = back;
+      if (cardClass) updates.cardClass = cardClass;
+
+      const updatedCard = await Card.findOneAndUpdate(
+        { id },
+        updates,
+        { new: true }
+      );
+      return updatedCard;
+    },
   },
 };
 

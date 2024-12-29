@@ -6,6 +6,7 @@ const typeDefs = gql`
     front: String!
     back: String!
     cardClass: String!
+    cardCreatorId: ID!
   }
 
   type User {
@@ -28,6 +29,7 @@ const typeDefs = gql`
 
   type Mutation {
     addCard(question: String!, answer: String!, cardClass: String!): Card
+    updateCard(id: Int!, front: String, back: String, cardClass: String): Card
     registerUser(username: String!, password: String!, authLevel: Int!): User
     loginUser(username: String!, password: String!): AuthPayload
   }
