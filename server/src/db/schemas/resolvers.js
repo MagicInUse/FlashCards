@@ -9,7 +9,23 @@ const resolvers = {
     },
     card: async (_, { id }) => await Card.findOne({ id }),
     users: async () => await User.find(),
-    user: async (_, { id }) => await User.findById(id),
+    user: async (_, { id }) => {
+      try {
+        const user = await User.findById(id);
+        if (!user) {
+          throw new Error('User not found');
+        }
+        return {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          createdAt: user.createdAt.toISOString(),
+          authLevel: user.authLevel
+        };
+      } catch (error) {
+        throw new Error('Error fetching user');
+      }
+    },
   },
   Mutation: {
     addCard: async (_, { front, back, cardClass }) => {

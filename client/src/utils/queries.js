@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
 
-export const GET_USER = gql`
-  query GetUser {
-    user {
+export const GET_USER_BY_ID = gql`
+  query GetUserById($id: ID!) {
+    user(id: $id) {
       id
       username
-      email
       createdAt
+      authLevel
     }
   }
 `;

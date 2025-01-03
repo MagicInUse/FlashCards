@@ -9,7 +9,7 @@ const Register = ({
   setRepeatPassword,
   passwordsMatch 
 }) => (
-  <form style={{ display: 'flex', flexDirection: 'column' }}>
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
     <input
       className="login-form-text"
       type="text"
@@ -37,7 +37,7 @@ const Register = ({
         Passwords do not match!
       </span>
     )}
-  </form>
+  </div>
 );
 
 export default Register;

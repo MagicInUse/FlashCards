@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Login = ({ username, password, setUsername, setPassword }) => (
-  <form style={{ display: 'flex', flexDirection: 'column' }}>
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
     <input
       className="login-form-text"
       type="text"
@@ -16,7 +16,7 @@ const Login = ({ username, password, setUsername, setPassword }) => (
       onChange={(e) => setPassword(e.target.value)}
       placeholder="Password"
     />
-  </form>
+  </div>
 );
 
 export default Login;
