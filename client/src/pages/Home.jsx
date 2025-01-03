@@ -14,7 +14,6 @@ const Home = () => {
   const navigate = useNavigate();
   const [loginUser, { error: loginError }] = useMutation(LOGIN_USER);
   const [registerUser, { error: registerError }] = useMutation(REGISTER_USER);
-
   const validatePasswords = (pass, repeat) => {
     setPasswordsMatch(pass === repeat);
     return pass === repeat;
@@ -40,7 +39,7 @@ const Home = () => {
           } 
         });
         localStorage.setItem('token', data.loginUser.token);
-        navigate('/cards');
+        navigate('/profile');
       }
       setUsername('');
       setPassword('');
@@ -84,7 +83,7 @@ const Home = () => {
           {newUser ? 'Register' : 'Login'}
         </button>
         {loginError && !newUser && <p>Error logging in</p>}
-        {registerError && newUser && <p>Error registering</p>}
+        {registerError && newUser && <p>Error registering user</p>}
       </form>
     </div>
   );
