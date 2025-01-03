@@ -70,6 +70,18 @@ const resolvers = {
       
       return updatedCard;
     },
+    deleteCard: async (_, { id }, context) => {
+      if (!context.user) throw new Error('Not authenticated');
+      
+      const card = await Card.findOne({ id });
+      if (!card) throw new Error('Card not found');
+      
+      if (card.cardCreatorId.toString() !== context.user.id) {
+        throw new Error('Not authorized to delete this card');
+      }
+    
+      return await Card.findOneAndDelete({ id });
+    },
   },
 };
 

@@ -36,6 +36,7 @@ const typeDefs = gql`
     updateCard(id: Int!, front: String!, back: String!, cardClass: String!, cardUpdaterId: ID!): Card
     registerUser(username: String!, password: String!, authLevel: Int!): User
     loginUser(username: String!, password: String!): AuthPayload
+    deleteCard(id: Int!): Card
   }
 `;
 
