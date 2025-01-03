@@ -1,9 +1,9 @@
 export const isAuthenticated = () => !!localStorage.getItem('token');
 
 export const getCurrentUserId = () => {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
+  if (!isAuthenticated()) return null;
   
+  const token = localStorage.getItem('token');
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.id;

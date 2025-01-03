@@ -17,16 +17,13 @@ export const REGISTER_USER = gql`
 `;
 
 export const ADD_CARD = gql`
-  mutation AddCard($front: String!, $back: String!, $cardClass: String!) {
-    addCard(front: $front, back: $back, cardClass: $cardClass) {
+  mutation AddCard($front: String!, $back: String!, $cardClass: String!, $cardCreatorId: ID!) {
+    addCard(front: $front, back: $back, cardClass: $cardClass, cardCreatorId: $cardCreatorId) {
       id
       front
       back
       cardClass
       cardCreatorId
-      cardUpdaterId
-      createdAt
-      updatedAt
     }
   }
 `;

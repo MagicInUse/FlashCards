@@ -23,6 +23,11 @@ h1 {
     margin-top: 20px;
 }
 
+h2 {
+    text-align: center;
+    margin: 20px;
+}
+
 .container {
     max-width: 960px;
     margin: 0 auto;
@@ -150,4 +155,77 @@ button:active {
     align-items: center;
     height: 100vh;
     font-size: 5em;
+}
+
+.add-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 1.1em;
+    color: var(--accent-color);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    font-size: 1em;
+    width: 100%;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.syntax-guide {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+}
+
+.syntax-guide h3 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.syntax-guide table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.syntax-guide td {
+    padding: 8px;
+    border-bottom: 1px solid var(--secondary-text);
+}
+
+.syntax-guide td:first-child {
+    color: var(--highlight-color);
+    width: 30%;
+}
+
+.syntax-guide td:nth-child(2) {
+    font-family: monospace;
+    color: var(--accent-color);
 }

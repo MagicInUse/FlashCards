@@ -1,6 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { Card, User } from '../../models/index.js';
 
+const getNextId = async () => {
+  const highestCard = await Card.findOne({}, 'id').sort('-id');
+  return highestCard ? highestCard.id + 1 : 1;
+};
+
 const resolvers = {
   Query: {
     cards: async () => {
@@ -28,12 +33,15 @@ const resolvers = {
     },
   },
   Mutation: {
-    addCard: async (_, { front, back, cardClass }) => {
-      const lastCard = await Card.findOne().sort({ id: -1 });
-      const newId = lastCard ? lastCard.id + 1 : 1;
-      const newCard = new Card({ id: newId, front, back, class: cardClass });
-      await newCard.save();
-      return newCard;
+    addCard: async (_, { front, back, cardClass, cardCreatorId }) => {
+      const card = new Card({
+        front,
+        back,
+        cardClass,
+        cardCreatorId,
+        id: await getNextId()
+      });
+      return await card.save();
     },
     registerUser: async (_, { username, password, authLevel = 0 }) => {
       const newUser = new User({ username, password, authLevel });

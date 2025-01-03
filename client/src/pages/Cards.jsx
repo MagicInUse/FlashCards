@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../components/Card.jsx';
+import Card from '../components/Card';
 
 const Cards = () => {
     const navigate = useNavigate();
