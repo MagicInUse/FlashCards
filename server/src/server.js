@@ -8,6 +8,8 @@ import { fileURLToPath } from 'url';
 import routes from './routes/index.js';
 import db from './db/config/connections.js';
 import cors from 'cors';
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
 
   await db();
 
@@ -34,14 +36,30 @@ import cors from 'cors';
     origin: ['https://magicapps.dev', 'http://localhost:3000'], // Allow both production and local origins
     credentials: true,
   }));
-
-  const server = new ApolloServer({ 
-    typeDefs, 
+  
+  const server = new ApolloServer({
+    typeDefs,
     resolvers,
   });
   await server.start();
 
-  app.use(`${BASE_URL}/graphql`, expressMiddleware(server));
+  app.use(`${BASE_URL}/graphql`,
+    expressMiddleware(server, {
+      context: async ({ req }) => {
+        const authHeader = req.headers.authorization || '';
+        if (authHeader) {
+          const token = authHeader.split('Bearer ')[1];
+          try {
+            const user = verify(token, process.env.JWT_SECRET);
+            return { user };
+          } catch (e) {
+            console.error('Token verification failed:', e);
+          }
+        }
+        return { user: null };
+      },
+    })
+  );
 
   app.use(BASE_URL, routes);
 

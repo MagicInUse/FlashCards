@@ -33,7 +33,7 @@ const typeDefs = gql`
 
   type Mutation {
     addCard(front: String!, back: String!, cardClass: String!, cardCreatorId: ID!): Card
-    updateCard(id: Int!, front: String, back: String, cardClass: String): Card
+    updateCard(id: Int!, front: String!, back: String!, cardClass: String!, cardUpdaterId: ID!): Card
     registerUser(username: String!, password: String!, authLevel: Int!): User
     loginUser(username: String!, password: String!): AuthPayload
   }
