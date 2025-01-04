@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_CARD } from '../utils/mutations';
-import { GET_CARDS } from '../utils/queries';
+import { GET_CARDS, GET_USER_BY_ID } from '../utils/queries';
 import Card from '../components/Card';
 import SyntaxGuide from '../components/SyntaxGuide';
 import { getCurrentUserId } from '../utils/auth';
@@ -10,6 +10,9 @@ import { getCurrentUserId } from '../utils/auth';
 const EditCard = () => {
     const navigate = useNavigate();
     const userId = getCurrentUserId();
+    const { loading: userLoading, error: userError, data: userData } = useQuery(GET_USER_BY_ID, {
+        variables: { id: userId }
+    });
     const { loading, error, data } = useQuery(GET_CARDS);
     const [selectedCardId, setSelectedCardId] = useState('');
     const [formState, setFormState] = useState({
@@ -64,8 +67,10 @@ const EditCard = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading cards</p>;
+    if (loading || userLoading) return <p>Loading...</p>;
+    if (error || userError) return <p>Error loading data</p>;
+
+    const isAuthorized = userData?.user?.authLevel > 0;
 
     return (
         <div style={{
@@ -77,7 +82,7 @@ const EditCard = () => {
         }}>
             <div>
                 <h2>Edit Card</h2>
-                <form onSubmit={handleSubmit} className="edit-card-form">
+                <form onSubmit={handleSubmit} className="card-form">
                     <div className="form-group">
                         <label>Select Card:</label>
                         <select 
@@ -122,13 +127,18 @@ const EditCard = () => {
                         />
                     </div>
                     <div className="button-group">
-                        <button type="submit" disabled={!selectedCardId}>
+                        <button type="submit" disabled={!isAuthorized || !selectedCardId}>
                             Update Card
                         </button>
                         <button type="button" onClick={() => navigate('/profile')}>
                             Cancel
                         </button>
                     </div>
+                    {!isAuthorized && (
+                        <div className="auth-error">
+                            You need elevated privileges to edit cards. Please contact an administrator.
+                        </div>
+                    )}
                 </form>
 
                 <SyntaxGuide />

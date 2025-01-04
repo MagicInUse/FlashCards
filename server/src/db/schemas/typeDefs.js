@@ -17,7 +17,7 @@ const typeDefs = gql`
     username: String!
     password: String!
     createdAt: String!
-    authLevel: Int
+    authLevel: Int!
   }
 
   type AuthPayload {

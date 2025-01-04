@@ -23,9 +23,8 @@ const resolvers = {
         return {
           id: user._id,
           username: user.username,
-          email: user.email,
           createdAt: user.createdAt.toISOString(),
-          authLevel: user.authLevel
+          authLevel: user.authLevel || 0
         };
       } catch (error) {
         throw new Error('Error fetching user');
@@ -33,7 +32,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    addCard: async (_, { front, back, cardClass, cardCreatorId }) => {
+    addCard: async (_, { front, back, cardClass, cardCreatorId }, context) => {
+      if (!context.user) throw new Error('Not authenticated');
+      
       const card = new Card({
         front,
         back,
@@ -41,6 +42,7 @@ const resolvers = {
         cardCreatorId,
         id: await getNextId()
       });
+      
       return await card.save();
     },
     registerUser: async (_, { username, password, authLevel = 0 }) => {

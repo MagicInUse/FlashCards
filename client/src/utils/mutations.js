@@ -24,6 +24,7 @@ export const ADD_CARD = gql`
       back
       cardClass
       cardCreatorId
+      createdAt
     }
   }
 `;

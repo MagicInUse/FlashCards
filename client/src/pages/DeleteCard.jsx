@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_CARD } from '../utils/mutations';
-import { GET_CARDS } from '../utils/queries';
+import { GET_CARDS, GET_USER_BY_ID } from '../utils/queries';
 import Card from '../components/Card';
 import { getCurrentUserId } from '../utils/auth';
 
 const DeleteCard = () => {
     const navigate = useNavigate();
     const userId = getCurrentUserId();
+    const { loading: userLoading, error: userError, data: userData } = useQuery(GET_USER_BY_ID, {
+        variables: { id: userId }
+    });
     const { loading, error, data } = useQuery(GET_CARDS);
     const [selectedCardId, setSelectedCardId] = useState('');
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -35,9 +38,10 @@ const DeleteCard = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading cards</p>;
+    if (loading || userLoading) return <p>Loading...</p>;
+    if (error || userError) return <p>Error loading data</p>;
 
+    const isAuthorized = userData?.user?.authLevel > 0;
     const selectedCard = data?.cards.find(card => card.id === parseInt(selectedCardId));
 
     return (
@@ -68,15 +72,15 @@ const DeleteCard = () => {
                 <div className="button-group">
                     {!showConfirmation ? (
                         <>
-                        <button 
-                            onClick={() => setShowConfirmation(true)}
-                            disabled={!selectedCardId}
-                        >
-                            Delete Card
-                        </button>
-                        <button onClick={() => navigate('/profile')}>
-                            Cancel
-                        </button>
+                            <button 
+                                onClick={() => setShowConfirmation(true)}
+                                disabled={!selectedCardId || !isAuthorized}
+                            >
+                                Delete Card
+                            </button>
+                            <button onClick={() => navigate('/profile')}>
+                                Cancel
+                            </button>
                         </>
                     ) : (
                         <div className="confirmation-dialog">
@@ -85,9 +89,13 @@ const DeleteCard = () => {
                             <button onClick={() => setShowConfirmation(false)}>No, Cancel</button>
                         </div>
                     )}
+                    </div>
+                    {!isAuthorized && (
+                        <div className="auth-error">
+                            You need elevated privileges to delete cards. Please contact an administrator.
+                        </div>
+                    )}
                 </div>
-            </div>
-
             {/* Right Side - Preview */}
             <div style={{
                 display: 'flex',

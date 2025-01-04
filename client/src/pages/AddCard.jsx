@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_CARD } from '../utils/mutations';
+import { GET_USER_BY_ID } from '../utils/queries';
 import Card from '../components/Card';
 import SyntaxGuide from '../components/SyntaxGuide';
 import { getCurrentUserId } from '../utils/auth';
@@ -9,6 +10,9 @@ import { getCurrentUserId } from '../utils/auth';
 const AddCard = () => {
     const navigate = useNavigate();
     const userId = getCurrentUserId();
+    const { loading, error, data } = useQuery(GET_USER_BY_ID, {
+        variables: { id: userId }
+    });
     const [formState, setFormState] = useState({
         front: '',
         back: '',
@@ -42,6 +46,11 @@ const AddCard = () => {
         }
     };
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error loading user data</p>;
+
+    const isAuthorized = data?.user?.authLevel > 0;
+
     return (
         <div style={{
             display: 'grid',
@@ -52,7 +61,7 @@ const AddCard = () => {
         }}>
             <div>
                 <h2>Add New Card</h2>
-                <form onSubmit={handleSubmit} className="add-card-form">
+                <form onSubmit={handleSubmit} className="card-form">
                     <div className="form-group">
                         <label>Class:</label>
                         <input
@@ -82,11 +91,18 @@ const AddCard = () => {
                         />
                     </div>
                     <div className="button-group">
-                        <button type="submit">Add Card</button>
+                        <button type="submit" disabled={!isAuthorized}>
+                            Add Card
+                        </button>
                         <button type="button" onClick={() => navigate('/profile')}>
                             Cancel
                         </button>
                     </div>
+                    {!isAuthorized && (
+                        <div className="auth-error">
+                            You need elevated privileges to add cards. Please contact an administrator.
+                        </div>
+                    )}
                 </form>
 
                 <SyntaxGuide />
