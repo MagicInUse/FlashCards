@@ -10,7 +10,13 @@ const StudyOptions = () => {
     const [selectedClass, setSelectedClass] = useState('all');
     const [timerEnabled, setTimerEnabled] = useState(false);
     const [timerDuration, setTimerDuration] = useState(15);
-    const { loading, error, data } = useQuery(GET_USERS);
+    const { loading, error, data } = useQuery(GET_USERS, {
+        context: {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+    });
 
     return (
         <div style={{
@@ -50,7 +56,7 @@ const StudyOptions = () => {
                         data?.users
                             ?.filter(user => user.id !== currentUserId)
                             ?.map(user => (
-                                <option key={user.id} value={user.id}>
+                                <option disabled key={user.id} value={user.id}>
                                     {user.username}
                                 </option>
                             ))
@@ -71,12 +77,12 @@ const StudyOptions = () => {
             </div>
 
             <div className="form-group-h" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                    type="checkbox"
+                    checked={timerEnabled}
+                    onChange={(e) => setTimerEnabled(e.target.checked)}
+                />
                 <label>
-                    <input
-                        type="checkbox"
-                        checked={timerEnabled}
-                        onChange={(e) => setTimerEnabled(e.target.checked)}
-                    />
                     {' '}Timer
                 </label>
                 <input

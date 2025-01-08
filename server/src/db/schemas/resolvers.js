@@ -18,7 +18,7 @@ const resolvers = {
       const users = await User.find({}, 'id username');
       return users.map(user => ({
         id: user._id,
-        username: user.username,
+        username: user.username
       }));
     },
     user: async (_, { id }) => {
