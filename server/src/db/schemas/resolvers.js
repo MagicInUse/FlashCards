@@ -80,6 +80,10 @@ const resolvers = {
       const card = await Card.findOne({ id });
       if (!card) throw new Error('Card not found');
       
+      if (card.cardCreatorId.toString() !== context.user.id) {
+        throw new Error('Not authorized to update this card');
+      }
+      
       const updatedCard = await Card.findOneAndUpdate(
         { id },
         { front, back, cardClass, cardUpdaterId },
