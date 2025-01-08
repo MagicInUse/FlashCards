@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Nav = ({ navigate, handleLogout }) => {
+const Nav = ({ navigate, handleLogout, filteredCards }) => {
     return (
         <div style={{
             padding: '20px',
@@ -9,7 +9,7 @@ const Nav = ({ navigate, handleLogout }) => {
             flexDirection: 'column',
             gap: '10px'
         }}>
-            <button onClick={() => navigate('/cards')}>Study</button>
+            <button onClick={() => navigate('/cards', { state: { filteredCards } })}>Study</button>
             <button onClick={() => navigate('/add')}>Add Card</button>
             <button onClick={() => navigate('/edit')}>Edit Card</button>
             <button onClick={() => navigate('/delete')}>Delete Card</button>

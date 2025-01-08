@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUserId, logout } from '../utils/auth';
 import Profile from '../components/Profile';
@@ -8,6 +8,7 @@ import StudyOptions from '../components/StudyOptions';
 const ProfilePage = () => {
     const navigate = useNavigate();
     const userId = getCurrentUserId() || '';
+    const [filteredCards, setFilteredCards] = useState([]);
 
     const handleLogout = () => {
         logout();
@@ -21,9 +22,13 @@ const ProfilePage = () => {
             minHeight: '100vh',
             gap: '20px'
         }}>
-            <Nav navigate={navigate} handleLogout={handleLogout} />
+            <Nav 
+                navigate={navigate} 
+                handleLogout={handleLogout}
+                filteredCards={filteredCards} 
+            />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <StudyOptions />
+                <StudyOptions onCardsFiltered={setFilteredCards} />
                 <Profile userId={userId} />
             </div>
         </div>

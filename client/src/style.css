@@ -140,7 +140,6 @@ button:active {
 
 #front p, #back p {
     margin: 10px;
-    text-transform: capitalize;
     padding: 20px;
 }
 

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CARDS } from '../utils/queries';
 
-const Card = ({ previewMode = false, previewData = null }) => {
-    const { loading, error, data } = !previewMode ? useQuery(GET_CARDS) : { loading: false, error: null, data: null };
+const Card = ({ previewMode = false, previewData = null, cards = null }) => {
+    const { loading, error, data } = !previewMode && !cards ? useQuery(GET_CARDS) : { loading: false, error: null, data: { cards } };
     const [showAnswer, setShowAnswer] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    if (!previewMode && loading) return <p>Loading...</p>;
-    if (!previewMode && error) return <p>Error loading cards</p>;
+    if (!previewMode && !cards && loading) return <p>Loading...</p>;
+    if (!previewMode && !cards && error) return <p>Error loading cards</p>;
     if (!previewMode && (!data || !data.cards || data.cards.length === 0)) return <p>No cards found</p>;
 
     const handleNext = () => {
