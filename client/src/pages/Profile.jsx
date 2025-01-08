@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { getCurrentUserId, logout } from '../utils/auth';
 import Profile from '../components/Profile';
 import Nav from '../components/Nav';
+import StudyOptions from '../components/StudyOptions';
 
 const ProfilePage = () => {
     const navigate = useNavigate();
-    const userId = getCurrentUserId();
+    const userId = getCurrentUserId() || '';
 
     const handleLogout = () => {
         logout();
@@ -21,7 +22,10 @@ const ProfilePage = () => {
             gap: '20px'
         }}>
             <Nav navigate={navigate} handleLogout={handleLogout} />
-            <Profile userId={userId} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <StudyOptions />
+                <Profile userId={userId} />
+            </div>
         </div>
     );
 };

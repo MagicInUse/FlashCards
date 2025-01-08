@@ -13,7 +13,14 @@ const resolvers = {
       return cards;
     },
     card: async (_, { id }) => await Card.findOne({ id }),
-    users: async () => await User.find(),
+    users: async (_, __, context) => {
+      if (!context.user) throw new Error('Not authenticated');
+      const users = await User.find({}, 'id username');
+      return users.map(user => ({
+        id: user._id,
+        username: user.username,
+      }));
+    },
     user: async (_, { id }) => {
       try {
         const user = await User.findById(id);

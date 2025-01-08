@@ -1,17 +1,21 @@
+import { jwtDecode } from 'jwt-decode';
+
 export const isAuthenticated = () => !!localStorage.getItem('token');
 
 export const getCurrentUserId = () => {
-  if (!isAuthenticated()) return null;
-  
-  const token = localStorage.getItem('token');
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.id;
-  } catch (e) {
-    return null;
-  }
+    const token = localStorage.getItem('token');
+    if (!token) return '';
+    
+    try {
+        const decoded = jwtDecode(token);
+        return decoded.id;
+    } catch (err) {
+        console.error('Token decode error:', err);
+        logout();
+        return '';
+    }
 };
 
 export const logout = () => {
-  localStorage.removeItem('token');
+    localStorage.removeItem('token');
 };

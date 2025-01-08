@@ -17,7 +17,7 @@ const Profile = ({ userId }) => {
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Profile Information</h1>
+            <h2>Profile Information</h2>
             <br />
             {loading && <p>Loading...</p>}
             {error && <p>Error loading profile data</p>}

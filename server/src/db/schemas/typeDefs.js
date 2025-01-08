@@ -25,9 +25,9 @@ const typeDefs = gql`
   }
 
   type Query {
-    cards: [Card]
+    cards: [Card]!
     card(id: Int!): Card!
-    users: [User]
+    users: [User]!
     user(id: ID!): User!
   }
 

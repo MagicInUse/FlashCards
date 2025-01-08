@@ -172,13 +172,21 @@ button:active {
     gap: 8px;
 }
 
+.form-group-h {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
 .form-group label {
     font-size: 1.1em;
     color: var(--accent-color);
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group-h input,
+.form-group-h textarea {
     padding: 10px;
     border: 2px solid var(--accent-color);
     border-radius: 8px;
