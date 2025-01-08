@@ -33,6 +33,7 @@ const Card = ({ previewMode = false, previewData = null, cards = null }) => {
 
     const card = previewMode ? {
         id: 'Preview',
+        cardCreatorId: 'Card Creator',
         ...previewData
     } : data.cards[currentIndex];
 

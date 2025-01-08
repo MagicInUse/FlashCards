@@ -13,19 +13,13 @@ const StudyOptions = ({ onCardsFiltered }) => {
     
     // Add cards query
     const { loading: cardsLoading, error: cardsError, data: cardsData } = useQuery(GET_CARDS);
-    const { loading: usersLoading, error: usersError, data: usersData } = useQuery(GET_USERS, {
-        context: {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        }
-    });
+    const { loading: usersLoading, error: usersError, data: usersData } = useQuery(GET_USERS);
 
     // Update parent component when filters change
     useEffect(() => {
         const filteredCards = getFilteredCards();
         onCardsFiltered(filteredCards);
-    }, [showAllUsers, selectedClass, cardsData]);
+    }, [showAllUsers, selectedUserId, selectedClass, cardsData]);
 
     // Get unique classes from filtered cards
     const getAvailableClasses = () => {
@@ -33,7 +27,7 @@ const StudyOptions = ({ onCardsFiltered }) => {
         
         const filteredCards = showAllUsers 
             ? cardsData.cards
-            : cardsData.cards.filter(card => card.cardCreatorId === currentUserId);
+            : cardsData.cards.filter(card => card.cardCreatorId === selectedUserId);
             
         const uniqueClasses = [...new Set(filteredCards.map(card => card.cardClass))];
         return uniqueClasses.sort();
@@ -44,7 +38,7 @@ const StudyOptions = ({ onCardsFiltered }) => {
         if (!cardsData?.cards) return [];
         
         return cardsData.cards.filter(card => {
-            const userMatch = showAllUsers || card.cardCreatorId === currentUserId;
+            const userMatch = showAllUsers || card.cardCreatorId === selectedUserId;
             const classMatch = selectedClass === 'all' || card.cardClass === selectedClass;
             return userMatch && classMatch;
         });
@@ -88,7 +82,7 @@ const StudyOptions = ({ onCardsFiltered }) => {
                         usersData?.users
                             ?.filter(user => user.id !== currentUserId)
                             ?.map(user => (
-                                <option disabled key={user.id} value={user.id}>
+                                <option key={user.id} value={user.id}>
                                     {user.username}
                                 </option>
                             ))

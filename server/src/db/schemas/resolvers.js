@@ -9,17 +9,26 @@ const getNextId = async () => {
 const resolvers = {
   Query: {
     cards: async () => {
-      const cards = await Card.find({}, 'id front back cardClass');
-      return cards;
+      const cards = await Card.find({}, 'id front back cardClass cardCreatorId');
+      return cards.map(card => ({
+        ...card._doc,
+        cardCreatorId: card.cardCreatorId
+      }));
     },
     card: async (_, { id }) => await Card.findOne({ id }),
     users: async (_, __, context) => {
-      if (!context.user) throw new Error('Not authenticated');
-      const users = await User.find({}, 'id username');
-      return users.map(user => ({
-        id: user._id,
-        username: user.username
-      }));
+      try {
+        if (!context.user) throw new Error('Not authenticated');
+        const users = await User.find({}, 'id username authLevel');
+        return users.map(user => ({
+          id: user._id,
+          username: user.username,
+          authLevel: user.authLevel
+        }));
+      } catch (error) {
+        console.error('Users query error:', error);
+        throw error;
+      }
     },
     user: async (_, { id }) => {
       try {
@@ -31,7 +40,7 @@ const resolvers = {
           id: user._id,
           username: user.username,
           createdAt: user.createdAt.toISOString(),
-          authLevel: user.authLevel || 0
+          authLevel: user.authLevel
         };
       } catch (error) {
         throw new Error('Error fetching user');

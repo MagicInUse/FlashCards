@@ -1,10 +1,23 @@
 import { gql } from '@apollo/client';
 
+export const GET_CARDS = gql`
+  query GetCards {
+    cards {
+      id
+      front
+      back
+      cardClass
+      cardCreatorId
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query GetUsers {
     users {
       id
       username
+      authLevel
     }
   }
 `;
@@ -16,17 +29,6 @@ export const GET_USER_BY_ID = gql`
       username
       createdAt
       authLevel
-    }
-  }
-`;
-
-export const GET_CARDS = gql`
-  query GetCards {
-    cards {
-      id
-      front
-      back
-      cardClass
     }
   }
 `;
